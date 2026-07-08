@@ -1,4 +1,4 @@
-﻿#define _GNU_SOURCE
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,9 +19,40 @@
 #define AUTH_MAGIC     0xCAFEBABE
 #define NOBODY_UID     65534
 
+static int create_socket(void) {
+    unlink(SOCKET_PATH);
+    int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (fd < 0) { perror("socket"); return -1; }
+
+    struct sockaddr_un addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, SOCKET_PATH, sizeof(addr.sun_path) - 1);
+
+    if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+        perror("bind"); close(fd); return -1;
+    }
+    chmod(SOCKET_PATH, S_IRUSR | S_IWUSR);
+    if (listen(fd, BACKLOG) < 0) {
+        perror("listen"); close(fd); return -1;
+    }
+
+    printf("  [BACKEND] Socket created   : %s (mode 0600)\n", SOCKET_PATH);
+    return fd;
+}
+
 int main(void) {
     printf("\n  [BACKEND] Process started  PID=%d  EUID=%d\n\n",
            getpid(), geteuid());
-    printf("  [BACKEND] Waiting for connections...\n");
+
+    int server = create_socket();
+    if (server < 0) {
+        fprintf(stderr, "  [FATAL] Socket creation failed.\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("  [BACKEND] Socket ready, waiting for connections...\n");
+    close(server);
+    unlink(SOCKET_PATH);
     return EXIT_SUCCESS;
 }
