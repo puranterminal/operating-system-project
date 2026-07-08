@@ -41,6 +41,21 @@ static int create_socket(void) {
     return fd;
 }
 
+static uid_t drop_privileges(void) {
+    uid_t euid = geteuid();
+    printf("  [BACKEND] EUID before drop : %d\n", (int)euid);
+
+    uid_t target = (euid == 0) ? NOBODY_UID : euid;
+
+    if (setresuid(target, target, target) != 0) {
+        fprintf(stderr, "  [FATAL] setresuid failed: %s\n", strerror(errno));
+        abort();
+    }
+
+    printf("  [BACKEND] EUID after  drop : %d\n", (int)geteuid());
+    return target;
+}
+
 int main(void) {
     printf("\n  [BACKEND] Process started  PID=%d  EUID=%d\n\n",
            getpid(), geteuid());
@@ -50,6 +65,10 @@ int main(void) {
         fprintf(stderr, "  [FATAL] Socket creation failed.\n");
         return EXIT_FAILURE;
     }
+
+    printf("\n  [BACKEND] === PRIVILEGE DROP ===\n");
+    uid_t server_uid = drop_privileges();
+    printf("  [BACKEND] ================================\n\n");
 
     printf("  [BACKEND] Socket ready, waiting for connections...\n");
     close(server);
