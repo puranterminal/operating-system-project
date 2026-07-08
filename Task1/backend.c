@@ -52,8 +52,35 @@ static uid_t drop_privileges(void) {
         abort();
     }
 
+    if (geteuid() != target) {
+        fprintf(stderr, "  [FATAL] geteuid() verification failed!\n");
+        abort();
+    }
     printf("  [BACKEND] EUID after  drop : %d\n", (int)geteuid());
-    return target;
+
+    FILE *f = fopen("/proc/self/status", "r");
+    if (f) {
+        char line[256];
+        while (fgets(line, sizeof(line), f))
+            if (strncmp(line, "Uid:", 4) == 0) {
+                printf("  [BACKEND] /proc check      : %s", line);
+                break;
+            }
+        fclose(f);
+    }
+
+    uid_t r, e, s;
+    if (getresuid(&r, &e, &s) == 0) {
+        printf("  [BACKEND] getresuid()      : real=%d effective=%d saved=%d\n",
+               (int)r, (int)e, (int)s);
+        if (r != target || e != target || s != target) {
+            fprintf(stderr, "  [FATAL] getresuid() verification failed!\n");
+            abort();
+        }
+    }
+
+    printf("  [BACKEND] Privilege drop VERIFIED. Re-elevation IMPOSSIBLE.\n");
+    return (uid_t)target;
 }
 
 int main(void) {
