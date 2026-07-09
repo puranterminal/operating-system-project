@@ -113,3 +113,36 @@ static const credential_t DB[] = {
     { "puranhacker", "Hacker@Linux2024" },
     { NULL, NULL }
 };
+typedef struct {
+    uint32_t magic;
+    char     username[MAX_USERNAME];
+    char     password[MAX_PASSWORD];
+    uint32_t attempt_no;
+} auth_request_t;
+
+typedef struct {
+    int      result;
+    uint32_t uid_after_drop;
+    char     message[256];
+} auth_response_t;
+
+static int validate_packet(const auth_request_t *req) {
+    if (req->magic != AUTH_MAGIC) {
+        printf("  [BACKEND] REJECT: wrong magic 0x%08X\n", req->magic);
+        return 0;
+    }
+    int uok = 0, pok = 0;
+    for (int i = 0; i < MAX_USERNAME; i++)
+        if (req->username[i] == '\0') { uok = 1; break; }
+    for (int i = 0; i < MAX_PASSWORD; i++)
+        if (req->password[i] == '\0') { pok = 1; break; }
+    if (!uok || !pok) {
+        printf("  [BACKEND] REJECT: no null terminator\n");
+        return 0;
+    }
+    if (req->username[0] == '\0' || req->password[0] == '\0') {
+        printf("  [BACKEND] REJECT: empty field\n");
+        return 0;
+    }
+    return 1;
+}
