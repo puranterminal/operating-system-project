@@ -82,38 +82,6 @@ static uid_t drop_privileges(void) {
     printf("  [BACKEND] Privilege drop VERIFIED. Re-elevation IMPOSSIBLE.\n");
     return (uid_t)target;
 }
-
-int main(void) {
-    printf("\n  [BACKEND] Process started  PID=%d  EUID=%d\n\n",
-           getpid(), geteuid());
-
-    int server = create_socket();
-    if (server < 0) {
-        fprintf(stderr, "  [FATAL] Socket creation failed.\n");
-        return EXIT_FAILURE;
-    }
-
-    printf("\n  [BACKEND] === PRIVILEGE DROP ===\n");
-    uid_t server_uid = drop_privileges();
-    printf("  [BACKEND] ================================\n\n");
-
-    printf("  [BACKEND] Server loop started...\n\n");
-
-    while (1) {
-        int client = accept(server, NULL, NULL);
-        if (client < 0) {
-            perror("accept");
-            continue;
-        }
-        printf("  [BACKEND] New connection accepted.\n");
-        handle_client(client, server_uid);
-    }
-
-    close(server);
-    unlink(SOCKET_PATH);
-    return EXIT_SUCCESS;
-}
-
 typedef struct { const char *username; const char *password; } credential_t;
 
 static const credential_t DB[] = {
@@ -225,4 +193,35 @@ static void handle_client(int client_fd, uid_t server_uid) {
     explicit_bzero(&resp, sizeof(resp));
     printf("  [BACKEND] Memory cleared with explicit_bzero()\n\n");
     close(client_fd);
+}
+
+int main(void) {
+    printf("\n  [BACKEND] Process started  PID=%d  EUID=%d\n\n",
+           getpid(), geteuid());
+
+    int server = create_socket();
+    if (server < 0) {
+        fprintf(stderr, "  [FATAL] Socket creation failed.\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("\n  [BACKEND] === PRIVILEGE DROP ===\n");
+    uid_t server_uid = drop_privileges();
+    printf("  [BACKEND] ================================\n\n");
+
+    printf("  [BACKEND] Server loop started...\n\n");
+
+    while (1) {
+        int client = accept(server, NULL, NULL);
+        if (client < 0) {
+            perror("accept");
+            continue;
+        }
+        printf("  [BACKEND] New connection accepted.\n");
+        handle_client(client, server_uid);
+    }
+
+    close(server);
+    unlink(SOCKET_PATH);
+    return EXIT_SUCCESS;
 }
