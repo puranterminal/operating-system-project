@@ -146,3 +146,21 @@ static int validate_packet(const auth_request_t *req) {
     }
     return 1;
 }
+static int ct_memcmp(const void *a, const void *b, size_t n) {
+    const unsigned char *p = a, *q = b;
+    int diff = 0;
+    for (size_t i = 0; i < n; i++) diff |= p[i] ^ q[i];
+    return diff;
+}
+
+static int verify_credentials(const char *user, const char *pass) {
+    for (int i = 0; DB[i].username != NULL; i++) {
+        if (strcmp(DB[i].username, user) == 0) {
+            size_t sl = strlen(DB[i].password);
+            size_t gl = strlen(pass);
+            if (sl != gl) return 0;
+            return ct_memcmp(DB[i].password, pass, sl) == 0 ? 1 : 0;
+        }
+    }
+    return 0;
+}
