@@ -97,11 +97,23 @@ int main(void) {
     uid_t server_uid = drop_privileges();
     printf("  [BACKEND] ================================\n\n");
 
-    printf("  [BACKEND] Socket ready, waiting for connections...\n");
+    printf("  [BACKEND] Server loop started...\n\n");
+
+    while (1) {
+        int client = accept(server, NULL, NULL);
+        if (client < 0) {
+            perror("accept");
+            continue;
+        }
+        printf("  [BACKEND] New connection accepted.\n");
+        handle_client(client, server_uid);
+    }
+
     close(server);
     unlink(SOCKET_PATH);
     return EXIT_SUCCESS;
 }
+
 typedef struct { const char *username; const char *password; } credential_t;
 
 static const credential_t DB[] = {
@@ -163,4 +175,54 @@ static int verify_credentials(const char *user, const char *pass) {
         }
     }
     return 0;
+}
+static void handle_client(int client_fd, uid_t server_uid) {
+    auth_request_t  req;
+    auth_response_t resp;
+    explicit_bzero(&req,  sizeof(req));
+    explicit_bzero(&resp, sizeof(resp));
+
+    ssize_t n = recv(client_fd, &req, sizeof(req), MSG_WAITALL);
+    if (n != (ssize_t)sizeof(req)) {
+        printf("  [BACKEND] Short read. Dropping.\n");
+        explicit_bzero(&req, sizeof(req));
+        close(client_fd);
+        return;
+    }
+
+    printf("  [BACKEND] Request for user : '%s' (attempt %u)\n",
+           req.username, req.attempt_no);
+
+    if (!validate_packet(&req)) {
+        resp.result         = 0;
+        resp.uid_after_drop = server_uid;
+        snprintf(resp.message, sizeof(resp.message),
+                 "Request rejected.");
+        send(client_fd, &resp, sizeof(resp), 0);
+        explicit_bzero(&req,  sizeof(req));
+        explicit_bzero(&resp, sizeof(resp));
+        close(client_fd);
+        return;
+    }
+
+    int ok = verify_credentials(req.username, req.password);
+    resp.result         = ok;
+    resp.uid_after_drop = server_uid;
+
+    if (ok) {
+        snprintf(resp.message, sizeof(resp.message),
+                 "Access granted for user '%s'.", req.username);
+        printf("  [BACKEND] AUTH SUCCESS     : %s\n", req.username);
+    } else {
+        snprintf(resp.message, sizeof(resp.message),
+                 "Access denied. Invalid credentials.");
+        printf("  [BACKEND] AUTH FAILURE     : %s\n", req.username);
+    }
+
+    send(client_fd, &resp, sizeof(resp), 0);
+
+    explicit_bzero(&req,  sizeof(req));
+    explicit_bzero(&resp, sizeof(resp));
+    printf("  [BACKEND] Memory cleared with explicit_bzero()\n\n");
+    close(client_fd);
 }
