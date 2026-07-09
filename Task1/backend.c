@@ -102,3 +102,14 @@ int main(void) {
     unlink(SOCKET_PATH);
     return EXIT_SUCCESS;
 }
+typedef struct { const char *username; const char *password; } credential_t;
+
+static const credential_t DB[] = {
+    { "alice",       "SecurePass#2024"  },
+    { "bob",         "P@ssw0rd!Linux"   },
+    { "admin",       "Admin@Secure99"   },
+    { "puran123",    "Puran@123!"       },
+    { "puranrijal",  "Rijal@Secure99"   },
+    { "puranhacker", "Hacker@Linux2024" },
+    { NULL, NULL }
+};
