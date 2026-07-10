@@ -27,3 +27,32 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 EOF
+static void echo_off(struct termios *saved) {
+    struct termios t;
+    tcgetattr(STDIN_FILENO, saved);
+    t = *saved;
+    t.c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHONL);
+    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
+static void echo_on(struct termios *saved) {
+    tcsetattr(STDIN_FILENO, TCSANOW, saved);
+}
+
+static int read_input(const char *prompt, char *buf, size_t maxlen, int hide) {
+    struct termios saved;
+    printf("  %s", prompt);
+    fflush(stdout);
+    if (hide) echo_off(&saved);
+    if (fgets(buf, (int)maxlen, stdin) == NULL) {
+        if (hide) echo_on(&saved);
+        printf("\n");
+        return -1;
+    }
+    if (hide) echo_on(&saved);
+    printf("\n");
+    size_t len = strlen(buf);
+    if (len > 0 && buf[len - 1] == '\n') buf[--len] = '\0';
+    if (len == 0 || len >= maxlen - 1) return -1;
+    return (int)len;
+}
