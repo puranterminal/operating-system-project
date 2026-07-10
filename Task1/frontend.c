@@ -130,3 +130,92 @@ static int authenticate(const char *user, const char *pass, int attempt) {
     printf("  [BACKEND] %s\n", resp.message);
     return resp.result;
 }
+static void print_banner(void) {
+    printf("\n");
+    printf("  +-----------------------------------------+\n");
+    printf("  |   PRIVILEGE-SEPARATED AUTH SYSTEM       |\n");
+    printf("  |   STP503CA9 - Task 1 - Puran Rijal      |\n");
+    printf("  +-----------------------------------------+\n");
+    printf("  |   [1]  Login                            |\n");
+    printf("  |   [2]  Exit                             |\n");
+    printf("  +-----------------------------------------+\n\n");
+}
+int main(void) {
+    printf("\n  [FRONTEND] Started  PID=%d  EUID=%d\n\n",
+           getpid(), geteuid());
+
+    pid_t backend_pid = launch_backend();
+    if (backend_pid < 0) return EXIT_FAILURE;
+
+    int attempts = 0;
+    time_t lock_until = 0;
+
+    while (1) {
+        print_banner();
+
+        if (lock_until > 0) {
+            time_t now = time(NULL);
+            if (now < lock_until) {
+                printf("  [LOCKED] Try again in %ld seconds.\n",
+                       (long)(lock_until - now));
+                sleep(2);
+                continue;
+            }
+            lock_until = 0;
+            attempts = 0;
+        }
+
+        char choice[8];
+        printf("  Your choice: ");
+        fflush(stdout);
+        if (fgets(choice, sizeof(choice), stdin) == NULL) break;
+        if (choice[0] == '2') break;
+        if (choice[0] != '1') {
+            printf("  [!] Enter 1 or 2.\n");
+            continue;
+        }
+
+        char username[MAX_USERNAME];
+        char password[MAX_PASSWORD];
+        memset(username, 0, sizeof(username));
+        memset(password, 0, sizeof(password));
+
+        printf("\n");
+        if (read_input("Username: ", username, sizeof(username), 0) < 0) {
+            printf("  [!] Invalid username.\n");
+            continue;
+        }
+        if (read_input("Password: ", password, sizeof(password), 1) < 0) {
+            printf("  [!] Invalid password.\n");
+            memset(password, 0, sizeof(password));
+            continue;
+        }
+
+        attempts++;
+        printf("\n  [INFO] Attempt %d of %d\n", attempts, MAX_ATTEMPTS);
+
+        int ok = authenticate(username, password, attempts);
+        memset(username, 0, sizeof(username));
+        memset(password, 0, sizeof(password));
+
+        if (ok) {
+            printf("\n  +-----------------------------------------+\n");
+            printf("  |         ACCESS GRANTED - Welcome!       |\n");
+            printf("  +-----------------------------------------+\n\n");
+            attempts = 0;
+            lock_until = 0;
+        } else {
+            printf("\n  [DENIED] Failed attempt %d of %d.\n",
+                   attempts, MAX_ATTEMPTS);
+            if (attempts >= MAX_ATTEMPTS) {
+                lock_until = time(NULL) + LOCK_SECONDS;
+                printf("  [LOCKED] Locked for %d seconds.\n", LOCK_SECONDS);
+            }
+        }
+    }
+
+    kill(backend_pid, SIGTERM);
+    waitpid(backend_pid, NULL, 0);
+    printf("\n  [FRONTEND] Goodbye.\n\n");
+    return EXIT_SUCCESS;
+}
