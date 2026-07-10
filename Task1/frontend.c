@@ -1,3 +1,4 @@
+cat > Task1/frontend.c << 'EOF'
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,3 +26,4 @@ int main(void) {
     printf("  [FRONTEND] Welcome to Privilege-Separated Auth System\n");
     return EXIT_SUCCESS;
 }
+EOF
