@@ -74,3 +74,59 @@ static pid_t launch_backend(void) {
     usleep(400000);
     return pid;
 }
+typedef struct {
+    uint32_t magic;
+    char username[MAX_USERNAME];
+    char password[MAX_PASSWORD];
+    uint32_t attempt_no;
+} auth_request_t;
+
+typedef struct {
+    int result;
+    uint32_t uid_after_drop;
+    char message[256];
+} auth_response_t;
+
+static int connect_backend(void) {
+    int sock = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (sock < 0) return -1;
+
+    struct sockaddr_un addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, SOCKET_PATH, sizeof(addr.sun_path) - 1);
+
+    for (int i = 0; i < 15; i++) {
+        if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) == 0)
+            return sock;
+        usleep(100000);
+    }
+    close(sock);
+    return -1;
+}
+
+static int authenticate(const char *user, const char *pass, int attempt) {
+    int sock = connect_backend();
+    if (sock < 0) {
+        printf("  [ERROR] Cannot reach backend.\n");
+        return 0;
+    }
+
+    auth_request_t req;
+    memset(&req, 0, sizeof(req));
+    req.magic = 0xCAFEBABE;
+    req.attempt_no = (uint32_t)attempt;
+    strncpy(req.username, user, MAX_USERNAME - 1);
+    strncpy(req.password, pass, MAX_PASSWORD - 1);
+
+    send(sock, &req, sizeof(req), 0);
+    memset(&req, 0, sizeof(req));
+
+    auth_response_t resp;
+    memset(&resp, 0, sizeof(resp));
+    recv(sock, &resp, sizeof(resp), MSG_WAITALL);
+    close(sock);
+
+    printf("  [BACKEND] %s\n", resp.message);
+    return resp.result;
+}
