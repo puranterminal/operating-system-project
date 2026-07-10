@@ -56,3 +56,21 @@ static int read_input(const char *prompt, char *buf, size_t maxlen, int hide) {
     if (len == 0 || len >= maxlen - 1) return -1;
     return (int)len;
 }
+static pid_t launch_backend(void) {
+    pid_t pid = fork();
+    if (pid < 0) { perror("fork"); return -1; }
+
+    if (pid == 0) {
+        char *argv[] = { BACKEND_PATH, NULL };
+        char *envp[] = { "PATH=/usr/bin:/bin", "HOME=/tmp", NULL };
+        printf("  [CHILD] PID=%d calling execve -> backend\n", getpid());
+        fflush(stdout);
+        execve(BACKEND_PATH, argv, envp);
+        perror("execve failed");
+        _exit(EXIT_FAILURE);
+    }
+
+    printf("  [PARENT] PID=%d spawned backend PID=%d\n", getpid(), (int)pid);
+    usleep(400000);
+    return pid;
+}
