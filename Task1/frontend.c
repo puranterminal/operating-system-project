@@ -1,7 +1,7 @@
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <errno.h>
 #include <time.h>
@@ -18,13 +18,6 @@
 #define MAX_PASSWORD   128
 #define MAX_ATTEMPTS   3
 #define LOCK_SECONDS   30
-
-int main(void) {
-    printf("\n  [FRONTEND] Started  PID=%d  EUID=%d\n\n",
-           getpid(), geteuid());
-    printf("  [FRONTEND] Welcome to Privilege-Separated Auth System\n");
-    return EXIT_SUCCESS;
-}
 
 static void echo_off(struct termios *saved) {
     struct termios t;
@@ -74,6 +67,7 @@ static pid_t launch_backend(void) {
     usleep(400000);
     return pid;
 }
+
 typedef struct {
     uint32_t magic;
     char username[MAX_USERNAME];
@@ -130,6 +124,7 @@ static int authenticate(const char *user, const char *pass, int attempt) {
     printf("  [BACKEND] %s\n", resp.message);
     return resp.result;
 }
+
 static void print_banner(void) {
     printf("\n");
     printf("  +-----------------------------------------+\n");
@@ -140,6 +135,7 @@ static void print_banner(void) {
     printf("  |   [2]  Exit                             |\n");
     printf("  +-----------------------------------------+\n\n");
 }
+
 int main(void) {
     printf("\n  [FRONTEND] Started  PID=%d  EUID=%d\n\n",
            getpid(), geteuid());
