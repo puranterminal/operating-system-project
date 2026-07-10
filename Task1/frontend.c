@@ -1,4 +1,3 @@
-cat > Task1/frontend.c << 'EOF'
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +25,7 @@ int main(void) {
     printf("  [FRONTEND] Welcome to Privilege-Separated Auth System\n");
     return EXIT_SUCCESS;
 }
-EOF
+
 static void echo_off(struct termios *saved) {
     struct termios t;
     tcgetattr(STDIN_FILENO, saved);
@@ -56,6 +55,7 @@ static int read_input(const char *prompt, char *buf, size_t maxlen, int hide) {
     if (len == 0 || len >= maxlen - 1) return -1;
     return (int)len;
 }
+
 static pid_t launch_backend(void) {
     pid_t pid = fork();
     if (pid < 0) { perror("fork"); return -1; }
