@@ -188,10 +188,22 @@ int main(int argc, char *argv[])
 
     g_state.child_pid = pid;
     sandbox_log("[SBOX ] Child spawned: PID=%d", pid);
-    sandbox_log("[SBOX ] Launching 3 monitoring threads...");
+        sandbox_log("[SBOX ] Launching 3 monitoring threads...");
+
+    pthread_t t_time, t_cpu, t_mem;
+
+    pthread_create(&t_time, NULL, monitor_time, NULL);
+    pthread_create(&t_cpu,  NULL, monitor_cpu,  NULL);
+    pthread_create(&t_mem,  NULL, monitor_mem,  NULL);
 
     int status;
     waitpid(pid, &status, 0);
+
+    atomic_store(&g_state.child_alive, 0);
+
+    pthread_join(t_time, NULL);
+    pthread_join(t_cpu,  NULL);
+    pthread_join(t_mem,  NULL);
 
     atomic_store(&g_state.child_alive, 0);
 
@@ -228,6 +240,108 @@ int main(int argc, char *argv[])
 
     pthread_mutex_destroy(&g_state.lock);
     if (g_log) fclose(g_log);
-
     return EXIT_SUCCESS;
+}
+static void *monitor_time(void *arg)
+{
+    (void)arg;
+    sandbox_log("[TIME ] Monitor started. Limit: %d seconds",
+                TIME_LIMIT_SEC);
+
+    struct timespec interval = {
+        .tv_sec  = 0,
+        .tv_nsec = POLL_INTERVAL_MS * 1000000L
+    };
+
+    while (atomic_load(&g_state.child_alive)) {
+        nanosleep(&interval, NULL);
+        if (!atomic_load(&g_state.child_alive)) break;
+
+        time_t elapsed = time(NULL) - g_state.start_time;
+        sandbox_log("[TIME ] Elapsed: %lds / %ds",
+                    (long)elapsed, TIME_LIMIT_SEC);
+
+        if (elapsed >= TIME_LIMIT_SEC) {
+            sandbox_log("[TIME ] Limit exceeded!");
+            terminate_child(REASON_TIMEOUT, "TIME LIMIT EXCEEDED");
+            break;
+        }
+    }
+
+    sandbox_log("[TIME ] Thread exiting.");
+    return NULL;
+}
+
+static void *monitor_cpu(void *arg)
+{
+    (void)arg;
+    sandbox_log("[CPU  ] Monitor started. Limit: %d%%",
+                CPU_LIMIT_PERCENT);
+
+    struct timespec interval = {
+        .tv_sec  = 0,
+        .tv_nsec = POLL_INTERVAL_MS * 1000000L
+    };
+
+    read_cpu_percent(g_state.child_pid);
+
+    while (atomic_load(&g_state.child_alive)) {
+        nanosleep(&interval, NULL);
+        if (!atomic_load(&g_state.child_alive)) break;
+
+        double cpu = read_cpu_percent(g_state.child_pid);
+        if (cpu < 0.0) break;
+
+        pthread_mutex_lock(&g_state.lock);
+        g_state.cpu_usage = cpu;
+        pthread_mutex_unlock(&g_state.lock);
+
+        sandbox_log("[CPU  ] Usage: %.1f%%", cpu);
+
+        if (cpu > CPU_LIMIT_PERCENT) {
+            sandbox_log("[CPU  ] Limit exceeded: %.1f%% > %d%%",
+                        cpu, CPU_LIMIT_PERCENT);
+            terminate_child(REASON_CPU, "CPU LIMIT EXCEEDED");
+            break;
+        }
+    }
+
+    sandbox_log("[CPU  ] Thread exiting.");
+    return NULL;
+}
+
+static void *monitor_mem(void *arg)
+{
+    (void)arg;
+    sandbox_log("[MEM  ] Monitor started. Limit: %d KB",
+                MEM_LIMIT_KB);
+
+    struct timespec interval = {
+        .tv_sec  = 0,
+        .tv_nsec = POLL_INTERVAL_MS * 1000000L
+    };
+
+    while (atomic_load(&g_state.child_alive)) {
+        nanosleep(&interval, NULL);
+        if (!atomic_load(&g_state.child_alive)) break;
+
+        long mem = read_mem_kb(g_state.child_pid);
+        if (mem < 0) break;
+
+        pthread_mutex_lock(&g_state.lock);
+        g_state.mem_kb = mem;
+        pthread_mutex_unlock(&g_state.lock);
+
+        sandbox_log("[MEM  ] Usage: %ld KB", mem);
+
+        if (mem > MEM_LIMIT_KB) {
+            sandbox_log("[MEM  ] Limit exceeded: %ld KB > %d KB",
+                        mem, MEM_LIMIT_KB);
+            terminate_child(REASON_MEMORY, "MEMORY LIMIT EXCEEDED");
+            break;
+        }
+    }
+
+    sandbox_log("[MEM  ] Thread exiting.");
+    return NULL;
 }
