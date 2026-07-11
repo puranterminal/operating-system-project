@@ -1,40 +1,3 @@
-/*
- * sandbox.c
- * ================================================================
- * STP503CA9 - Programming and Learning Systems
- * Task 2: User Space Malware Analysis Sandbox
- * (Process Control, Resource Isolation and Concurrency)
- * ================================================================
- *
- * WHAT THIS DOES:
- *   - Forks a child process and executes an untrusted binary
- *     via execve() — full process isolation
- *   - Parent supervises the child externally
- *   - Three concurrent pthreads monitor independently:
- *       Thread 1: Execution time  — kills after TIME_LIMIT_SEC
- *       Thread 2: CPU usage       — reads /proc/PID/stat
- *       Thread 3: Memory usage    — reads /proc/PID/status
- *   - SIGKILL enforces termination unconditionally
- *   - Shared state protected with mutex + C11 atomics
- *   - Untrusted binary has NO involvement in its monitoring
- *   - All events written to sandbox.log
- *
- * OS CONCEPTS DEMONSTRATED:
- *   - fork() + execve() process isolation
- *   - External /proc-based resource monitoring
- *   - POSIX signals for forced termination
- *   - pthreads concurrency (3 independent monitors)
- *   - atomic_int + pthread_mutex_t shared state
- *   - waitpid() child supervision
- *
- * COMPILE:
- *   gcc -Wall -std=c11 -o sandbox sandbox.c -lpthread
- *
- * RUN:
- *   ./sandbox ./test_binaries/test_cpu
- *   ./sandbox ./test_binaries/test_mem
- *   ./sandbox ./test_binaries/test_normal
- */
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -180,105 +143,7 @@ static long read_mem_kb(pid_t pid)
     return -1;
 }
 
-int main(int argc, char *argv[])
-{
-    if (argc < 2) {
-        fprintf(stderr, "Usage: ./sandbox <binary> [args...]\n");
-        return EXIT_FAILURE;
-    }
-
-    g_log = fopen(LOG_FILE, "a");
-
-    sandbox_log("[SBOX ] ============================================");
-    sandbox_log("[SBOX ] User Space Malware Analysis Sandbox");
-    sandbox_log("[SBOX ] STP503CA9 Task 2 — Puran Rijal");
-    sandbox_log("[SBOX ] ============================================");
-    sandbox_log("[SBOX ] Binary   : %s",     argv[1]);
-    sandbox_log("[SBOX ] Time lim : %ds",    TIME_LIMIT_SEC);
-    sandbox_log("[SBOX ] CPU lim  : %d%%",   CPU_LIMIT_PERCENT);
-    sandbox_log("[SBOX ] Mem lim  : %d KB",  MEM_LIMIT_KB);
-    sandbox_log("[SBOX ] Sandbox  : PID=%d", getpid());
-
-    memset(&g_state, 0, sizeof(g_state));
-    atomic_init(&g_state.child_alive, 1);
-    atomic_init(&g_state.termination_reason, REASON_NORMAL);
-    pthread_mutex_init(&g_state.lock, NULL);
-    g_state.start_time = time(NULL);
-
-    pid_t pid = fork();
-
-    if (pid < 0) {
-        perror("fork");
-        return EXIT_FAILURE;
-    }
-
-    if (pid == 0) {
-        char *envp[] = {
-            "PATH=/usr/bin:/bin",
-            "HOME=/tmp",
-            NULL
-        };
-        execve(argv[1], &argv[1], envp);
-        fprintf(stderr, "[CHILD] execve failed: %s\n", strerror(errno));
-        _exit(EXIT_FAILURE);
-    }
-
-    g_state.child_pid = pid;
-    sandbox_log("[SBOX ] Child spawned: PID=%d", pid);
-        sandbox_log("[SBOX ] Launching 3 monitoring threads...");
-
-    pthread_t t_time, t_cpu, t_mem;
-
-    pthread_create(&t_time, NULL, monitor_time, NULL);
-    pthread_create(&t_cpu,  NULL, monitor_cpu,  NULL);
-    pthread_create(&t_mem,  NULL, monitor_mem,  NULL);
-
-    int status;
-    waitpid(pid, &status, 0);
-
-    atomic_store(&g_state.child_alive, 0);
-
-    pthread_join(t_time, NULL);
-    pthread_join(t_cpu,  NULL);
-    pthread_join(t_mem,  NULL);
-
-    atomic_store(&g_state.child_alive, 0);
-
-    time_t elapsed = time(NULL) - g_state.start_time;
-    int    reason  = atomic_load(&g_state.termination_reason);
-
-    const char *reason_str[] = {
-        "NORMAL COMPLETION",
-        "TIME LIMIT EXCEEDED",
-        "CPU LIMIT EXCEEDED",
-        "MEMORY LIMIT EXCEEDED"
-    };
-
-    sandbox_log("[SBOX ] ============================================");
-    sandbox_log("[SBOX ] SANDBOX FINAL REPORT");
-    sandbox_log("[SBOX ] Binary          : %s", argv[1]);
-    sandbox_log("[SBOX ] Child PID       : %d", pid);
-    sandbox_log("[SBOX ] Total runtime   : %lds", (long)elapsed);
-
-    pthread_mutex_lock(&g_state.lock);
-    sandbox_log("[SBOX ] Peak CPU usage  : %.1f%%", g_state.cpu_usage);
-    sandbox_log("[SBOX ] Peak memory     : %ld KB", g_state.mem_kb);
-    pthread_mutex_unlock(&g_state.lock);
-
-    if (WIFEXITED(status))
-        sandbox_log("[SBOX ] Exit status     : %d", WEXITSTATUS(status));
-    else if (WIFSIGNALED(status))
-        sandbox_log("[SBOX ] Killed by signal: %d (%s)",
-                    WTERMSIG(status), strsignal(WTERMSIG(status)));
-
-    sandbox_log("[SBOX ] Termination     : %s",
-                reason_str[reason < 4 ? reason : 0]);
-    sandbox_log("[SBOX ] ============================================");
-
-    pthread_mutex_destroy(&g_state.lock);
-    if (g_log) fclose(g_log);
-    return EXIT_SUCCESS;
-}
+/* ── THREAD 1: TIME MONITOR ─────────────────────────────────── */
 static void *monitor_time(void *arg)
 {
     (void)arg;
@@ -309,6 +174,7 @@ static void *monitor_time(void *arg)
     return NULL;
 }
 
+/* ── THREAD 2: CPU MONITOR ──────────────────────────────────── */
 static void *monitor_cpu(void *arg)
 {
     (void)arg;
@@ -347,6 +213,7 @@ static void *monitor_cpu(void *arg)
     return NULL;
 }
 
+/* ── THREAD 3: MEMORY MONITOR ───────────────────────────────── */
 static void *monitor_mem(void *arg)
 {
     (void)arg;
@@ -381,3 +248,102 @@ static void *monitor_mem(void *arg)
 
     sandbox_log("[MEM  ] Thread exiting.");
     return NULL;
+}
+
+/* ── MAIN ───────────────────────────────────────────────────── */
+int main(int argc, char *argv[])
+{
+    if (argc < 2) {
+        fprintf(stderr, "Usage: ./sandbox <binary>\n");
+        return EXIT_FAILURE;
+    }
+
+    g_log = fopen(LOG_FILE, "a");
+
+    sandbox_log("[SBOX ] ============================================");
+    sandbox_log("[SBOX ] User Space Malware Analysis Sandbox");
+    sandbox_log("[SBOX ] Binary   : %s",     argv[1]);
+    sandbox_log("[SBOX ] Time lim : %ds",    TIME_LIMIT_SEC);
+    sandbox_log("[SBOX ] CPU lim  : %d%%",   CPU_LIMIT_PERCENT);
+    sandbox_log("[SBOX ] Mem lim  : %d KB",  MEM_LIMIT_KB);
+    sandbox_log("[SBOX ] Sandbox  : PID=%d", getpid());
+
+    memset(&g_state, 0, sizeof(g_state));
+    atomic_init(&g_state.child_alive, 1);
+    atomic_init(&g_state.termination_reason, REASON_NORMAL);
+    pthread_mutex_init(&g_state.lock, NULL);
+    g_state.start_time = time(NULL);
+
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        return EXIT_FAILURE;
+    }
+
+    if (pid == 0) {
+        char *envp[] = {
+            "PATH=/usr/bin:/bin",
+            "HOME=/tmp",
+            NULL
+        };
+        execve(argv[1], &argv[1], envp);
+        fprintf(stderr, "[CHILD] execve failed: %s\n", strerror(errno));
+        _exit(EXIT_FAILURE);
+    }
+
+    g_state.child_pid = pid;
+    sandbox_log("[SBOX ] Child spawned: PID=%d", pid);
+    sandbox_log("[SBOX ] Launching 3 monitoring threads...");
+
+    pthread_t t_time, t_cpu, t_mem;
+
+    pthread_create(&t_time, NULL, monitor_time, NULL);
+    pthread_create(&t_cpu,  NULL, monitor_cpu,  NULL);
+    pthread_create(&t_mem,  NULL, monitor_mem,  NULL);
+
+    int status;
+    waitpid(pid, &status, 0);
+
+    atomic_store(&g_state.child_alive, 0);
+
+    pthread_join(t_time, NULL);
+    pthread_join(t_cpu,  NULL);
+    pthread_join(t_mem,  NULL);
+
+    time_t elapsed = time(NULL) - g_state.start_time;
+    int    reason  = atomic_load(&g_state.termination_reason);
+
+    const char *reason_str[] = {
+        "NORMAL COMPLETION",
+        "TIME LIMIT EXCEEDED",
+        "CPU LIMIT EXCEEDED",
+        "MEMORY LIMIT EXCEEDED"
+    };
+
+    sandbox_log("[SBOX ] ============================================");
+    sandbox_log("[SBOX ] SANDBOX FINAL REPORT");
+    sandbox_log("[SBOX ] Binary          : %s", argv[1]);
+    sandbox_log("[SBOX ] Child PID       : %d", pid);
+    sandbox_log("[SBOX ] Total runtime   : %lds", (long)elapsed);
+
+    pthread_mutex_lock(&g_state.lock);
+    sandbox_log("[SBOX ] Peak CPU usage  : %.1f%%", g_state.cpu_usage);
+    sandbox_log("[SBOX ] Peak memory     : %ld KB", g_state.mem_kb);
+    pthread_mutex_unlock(&g_state.lock);
+
+    if (WIFEXITED(status))
+        sandbox_log("[SBOX ] Exit status     : %d", WEXITSTATUS(status));
+    else if (WIFSIGNALED(status))
+        sandbox_log("[SBOX ] Killed by signal: %d (%s)",
+                    WTERMSIG(status), strsignal(WTERMSIG(status)));
+
+    sandbox_log("[SBOX ] Termination     : %s",
+                reason_str[reason < 4 ? reason : 0]);
+    sandbox_log("[SBOX ] ============================================");
+
+    pthread_mutex_destroy(&g_state.lock);
+    if (g_log) fclose(g_log);
+
+    return EXIT_SUCCESS;
+}
