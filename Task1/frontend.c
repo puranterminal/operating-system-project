@@ -181,7 +181,7 @@ int main(void) {
             printf("  [!] Invalid username.\n");
             continue;
         }
-        if (read_input("Password: ", password, sizeof(password), 1) < 0) {
+        if (read_input("Password: ", password, sizeof(password), 0) < 0) {
             printf("  [!] Invalid password.\n");
             memset(password, 0, sizeof(password));
             continue;
