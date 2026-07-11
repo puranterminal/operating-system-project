@@ -1,3 +1,40 @@
+/*
+ * sandbox.c
+ * ================================================================
+ * STP503CA9 - Programming and Learning Systems
+ * Task 2: User Space Malware Analysis Sandbox
+ * (Process Control, Resource Isolation and Concurrency)
+ * ================================================================
+ *
+ * WHAT THIS DOES:
+ *   - Forks a child process and executes an untrusted binary
+ *     via execve() — full process isolation
+ *   - Parent supervises the child externally
+ *   - Three concurrent pthreads monitor independently:
+ *       Thread 1: Execution time  — kills after TIME_LIMIT_SEC
+ *       Thread 2: CPU usage       — reads /proc/PID/stat
+ *       Thread 3: Memory usage    — reads /proc/PID/status
+ *   - SIGKILL enforces termination unconditionally
+ *   - Shared state protected with mutex + C11 atomics
+ *   - Untrusted binary has NO involvement in its monitoring
+ *   - All events written to sandbox.log
+ *
+ * OS CONCEPTS DEMONSTRATED:
+ *   - fork() + execve() process isolation
+ *   - External /proc-based resource monitoring
+ *   - POSIX signals for forced termination
+ *   - pthreads concurrency (3 independent monitors)
+ *   - atomic_int + pthread_mutex_t shared state
+ *   - waitpid() child supervision
+ *
+ * COMPILE:
+ *   gcc -Wall -std=c11 -o sandbox sandbox.c -lpthread
+ *
+ * RUN:
+ *   ./sandbox ./test_binaries/test_cpu
+ *   ./sandbox ./test_binaries/test_mem
+ *   ./sandbox ./test_binaries/test_normal
+ */
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -344,4 +381,3 @@ static void *monitor_mem(void *arg)
 
     sandbox_log("[MEM  ] Thread exiting.");
     return NULL;
-}
