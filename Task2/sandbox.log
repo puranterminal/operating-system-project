@@ -1,0 +1,431 @@
+[11:35:54] [SBOX ] ============================================
+[11:35:54] [SBOX ] User Space Malware Analysis Sandbox
+[11:35:54] [SBOX ] Binary   : ./test_binaries/test_normal
+[11:35:54] [SBOX ] Time lim : 10s
+[11:35:54] [SBOX ] CPU lim  : 80%
+[11:35:54] [SBOX ] Mem lim  : 102400 KB
+[11:35:54] [SBOX ] Sandbox  : PID=2489
+[11:35:54] [SBOX ] Child spawned: PID=2490
+[11:35:54] [SBOX ] Launching 3 monitoring threads...
+[11:35:54] [TIME ] Monitor started. Limit: 10 seconds
+[11:35:54] [CPU  ] Monitor started. Limit: 80%
+[11:35:54] [MEM  ] Monitor started. Limit: 102400 KB
+[11:35:54] [CPU  ] Thread exiting.
+[11:35:54] [MEM  ] Thread exiting.
+[11:35:55] [TIME ] Thread exiting.
+[11:35:55] [SBOX ] ============================================
+[11:35:55] [SBOX ] SANDBOX FINAL REPORT
+[11:35:55] [SBOX ] Binary          : ./test_binaries/test_normal
+[11:35:55] [SBOX ] Child PID       : 2490
+[11:35:55] [SBOX ] Total runtime   : 1s
+[11:35:55] [SBOX ] Peak CPU usage  : 0.0%
+[11:35:55] [SBOX ] Peak memory     : 0 KB
+[11:35:55] [SBOX ] Exit status     : 1
+[11:35:55] [SBOX ] Termination     : NORMAL COMPLETION
+[11:35:55] [SBOX ] ============================================
+[11:39:09] [SBOX ] ============================================
+[11:39:09] [SBOX ] User Space Malware Analysis Sandbox
+[11:39:09] [SBOX ] Binary   : ./test_binaries/test_normal
+[11:39:09] [SBOX ] Time lim : 10s
+[11:39:09] [SBOX ] CPU lim  : 80%
+[11:39:09] [SBOX ] Mem lim  : 102400 KB
+[11:39:09] [SBOX ] Sandbox  : PID=2630
+[11:39:09] [SBOX ] Child spawned: PID=2631
+[11:39:09] [SBOX ] Launching 3 monitoring threads...
+[11:39:09] [TIME ] Monitor started. Limit: 10 seconds
+[11:39:09] [MEM  ] Monitor started. Limit: 102400 KB
+[11:39:09] [CPU  ] Monitor started. Limit: 80%
+[11:39:10] [TIME ] Elapsed: 1s / 10s
+[11:39:10] [MEM  ] Usage: 1536 KB
+[11:39:10] [CPU  ] Usage: 0.0%
+[11:39:10] [TIME ] Elapsed: 1s / 10s
+[11:39:10] [MEM  ] Usage: 1536 KB
+[11:39:10] [CPU  ] Usage: 0.0%
+[11:39:11] [TIME ] Elapsed: 2s / 10s
+[11:39:11] [MEM  ] Usage: 1536 KB
+[11:39:11] [CPU  ] Usage: 0.0%
+[11:39:11] [TIME ] Elapsed: 2s / 10s
+[11:39:11] [MEM  ] Usage: 1536 KB
+[11:39:11] [CPU  ] Usage: 0.0%
+[11:39:12] [TIME ] Elapsed: 3s / 10s
+[11:39:12] [MEM  ] Usage: 1536 KB
+[11:39:12] [CPU  ] Usage: 0.0%
+[11:39:12] [TIME ] Elapsed: 3s / 10s
+[11:39:12] [MEM  ] Usage: 1536 KB
+[11:39:12] [CPU  ] Usage: 0.0%
+[11:39:13] [TIME ] Elapsed: 4s / 10s
+[11:39:13] [MEM  ] Usage: 1536 KB
+[11:39:13] [CPU  ] Usage: 0.0%
+[11:39:13] [TIME ] Elapsed: 4s / 10s
+[11:39:13] [MEM  ] Usage: 1536 KB
+[11:39:13] [CPU  ] Usage: 0.0%
+[11:39:14] [TIME ] Elapsed: 5s / 10s
+[11:39:14] [MEM  ] Usage: 1536 KB
+[11:39:14] [CPU  ] Usage: 0.0%
+[11:39:14] [TIME ] Thread exiting.
+[11:39:14] [MEM  ] Thread exiting.
+[11:39:14] [CPU  ] Thread exiting.
+[11:39:14] [SBOX ] ============================================
+[11:39:14] [SBOX ] SANDBOX FINAL REPORT
+[11:39:14] [SBOX ] Binary          : ./test_binaries/test_normal
+[11:39:14] [SBOX ] Child PID       : 2631
+[11:39:14] [SBOX ] Total runtime   : 5s
+[11:39:14] [SBOX ] Peak CPU usage  : 0.0%
+[11:39:14] [SBOX ] Peak memory     : 1536 KB
+[11:39:14] [SBOX ] Exit status     : 0
+[11:39:14] [SBOX ] Termination     : NORMAL COMPLETION
+[11:39:14] [SBOX ] ============================================
+[11:42:44] [SBOX ] ============================================
+[11:42:44] [SBOX ] User Space Malware Analysis Sandbox
+[11:42:44] [SBOX ] Binary   : ./test_binaries/test_normal
+[11:42:44] [SBOX ] Time lim : 10s
+[11:42:44] [SBOX ] CPU lim  : 80%
+[11:42:44] [SBOX ] Mem lim  : 102400 KB
+[11:42:44] [SBOX ] Sandbox  : PID=2717
+[11:42:44] [SBOX ] Child spawned: PID=2719
+[11:42:44] [SBOX ] Launching 3 monitoring threads...
+[11:42:44] [TIME ] Monitor started. Limit: 10 seconds
+[11:42:44] [11:42:44] [CPU  ] Monitor started. Limit: 80%[MEM  ] Monitor started. Limit: 102400 KB
+
+[11:42:44] [TIME ] Elapsed: 0s / 10s
+[11:42:44] [MEM  ] Usage: 1536 KB
+[11:42:44] [CPU  ] Usage: 0.0%
+[11:42:45] [MEM  ] Usage: 1536 KB
+[11:42:45] [TIME ] Elapsed: 1s / 10s
+[11:42:45] [CPU  ] Usage: 0.0%
+[11:42:45] [MEM  ] Usage: 1536 KB
+[11:42:45] [TIME ] Elapsed: 1s / 10s
+[11:42:45] [CPU  ] Usage: 0.0%
+[11:42:46] [MEM  ] Usage: 1536 KB
+[11:42:46] [TIME ] Elapsed: 2s / 10s
+[11:42:46] [CPU  ] Usage: 0.0%
+[11:42:46] [MEM  ] Usage: 1536 KB
+[11:42:46] [TIME ] Elapsed: 2s / 10s
+[11:42:46] [CPU  ] Usage: 0.0%
+[11:42:47] [MEM  ] Usage: 1536 KB
+[11:42:47] [TIME ] Elapsed: 3s / 10s
+[11:42:47] [CPU  ] Usage: 0.0%
+[11:42:47] [MEM  ] Usage: 1536 KB
+[11:42:47] [TIME ] Elapsed: 3s / 10s
+[11:42:47] [CPU  ] Usage: 0.0%
+[11:42:48] [MEM  ] Usage: 1536 KB
+[11:42:48] [TIME ] Elapsed: 4s / 10s
+[11:42:48] [CPU  ] Usage: 0.0%
+[11:42:48] [MEM  ] Usage: 1536 KB
+[11:42:48] [TIME ] Elapsed: 4s / 10s
+[11:42:48] [CPU  ] Usage: 0.0%
+[11:42:49] [MEM  ] Thread exiting.
+[11:42:49] [TIME ] Elapsed: 5s / 10s
+[11:42:49] [TIME ] Thread exiting.
+[11:42:49] [CPU  ] Usage: 0.0%
+[11:42:49] [CPU  ] Thread exiting.
+[11:42:49] [SBOX ] ============================================
+[11:42:49] [SBOX ] SANDBOX FINAL REPORT
+[11:42:49] [SBOX ] Binary          : ./test_binaries/test_normal
+[11:42:49] [SBOX ] Child PID       : 2719
+[11:42:49] [SBOX ] Total runtime   : 5s
+[11:42:49] [SBOX ] Peak CPU usage  : 0.0%
+[11:42:49] [SBOX ] Peak memory     : 1536 KB
+[11:42:49] [SBOX ] Exit status     : 0
+[11:42:49] [SBOX ] Termination     : NORMAL COMPLETION
+[11:42:49] [SBOX ] ============================================
+[06:29:45] [SBOX ] ============================================
+[06:29:45] [SBOX ] User Space Malware Analysis Sandbox
+[06:29:45] [SBOX ] Binary   : ./test_binaries/test_cpu
+[06:29:45] [SBOX ] Time lim : 10s
+[06:29:45] [SBOX ] CPU lim  : 80%
+[06:29:45] [SBOX ] Mem lim  : 102400 KB
+[06:29:45] [SBOX ] Sandbox  : PID=914
+[06:29:45] [SBOX ] Child spawned: PID=916
+[06:29:45] [SBOX ] Launching 3 monitoring threads...
+[06:29:45] [TIME ] Monitor started. Limit: 10 seconds
+[06:29:45] [CPU  ] Monitor started. Limit: 80%
+[06:29:45] [MEM  ] Monitor started. Limit: 102400 KB
+[06:29:45] [CPU  ] Thread exiting.
+[06:29:45] [MEM  ] Thread exiting.
+[06:29:46] [TIME ] Thread exiting.
+[06:29:46] [SBOX ] ============================================
+[06:29:46] [SBOX ] SANDBOX FINAL REPORT
+[06:29:46] [SBOX ] Binary          : ./test_binaries/test_cpu
+[06:29:46] [SBOX ] Child PID       : 916
+[06:29:46] [SBOX ] Total runtime   : 1s
+[06:29:46] [SBOX ] Peak CPU usage  : 0.0%
+[06:29:46] [SBOX ] Peak memory     : 0 KB
+[06:29:46] [SBOX ] Exit status     : 1
+[06:29:46] [SBOX ] Termination     : NORMAL COMPLETION
+[06:29:46] [SBOX ] ============================================
+[06:30:37] [SBOX ] ============================================
+[06:30:37] [SBOX ] User Space Malware Analysis Sandbox
+[06:30:37] [SBOX ] Binary   : ./test_binaries/test_mem
+[06:30:37] [SBOX ] Time lim : 10s
+[06:30:37] [SBOX ] CPU lim  : 80%
+[06:30:37] [SBOX ] Mem lim  : 102400 KB
+[06:30:37] [SBOX ] Sandbox  : PID=945
+[06:30:37] [SBOX ] Child spawned: PID=947
+[06:30:37] [SBOX ] Launching 3 monitoring threads...
+[06:30:37] [TIME ] Monitor started. Limit: 10 seconds
+[06:30:37] [CPU  ] Monitor started. Limit: 80%
+[06:30:37] [MEM  ] Monitor started. Limit: 102400 KB
+[06:30:38] [TIME ] Elapsed: 1s / 10s
+[06:30:38] [CPU  ] Usage: 0.0%
+[06:30:38] [MEM  ] Usage: 11776 KB
+[06:30:38] [TIME ] Elapsed: 1s / 10s
+[06:30:38] [CPU  ] Usage: 0.0%
+[06:30:38] [MEM  ] Usage: 11776 KB
+[06:30:39] [TIME ] Elapsed: 2s / 10s
+[06:30:39] [CPU  ] Usage: 2.0%
+[06:30:39] [MEM  ] Usage: 22016 KB
+[06:30:39] [TIME ] Elapsed: 2s / 10s
+[06:30:39] [CPU  ] Usage: 0.0%
+[06:30:39] [MEM  ] Usage: 22016 KB
+[06:30:40] [TIME ] Elapsed: 3s / 10s
+[06:30:40] [MEM  ] Usage: 32256 KB
+[06:30:40] [CPU  ] Usage: 4.0%
+[06:30:40] [TIME ] Elapsed: 3s / 10s
+[06:30:40] [MEM  ] Usage: 32256 KB
+[06:30:40] [CPU  ] Usage: 0.0%
+[06:30:41] [TIME ] Elapsed: 4s / 10s
+[06:30:41] [MEM  ] Usage: 42496 KB
+[06:30:41] [CPU  ] Usage: 2.0%
+[06:30:42] [TIME ] Elapsed: 5s / 10s
+[06:30:42] [CPU  ] Usage: 0.0%
+[06:30:42] [MEM  ] Usage: 42496 KB
+[06:30:42] [TIME ] Elapsed: 5s / 10s
+[06:30:42] [CPU  ] Usage: 2.0%
+[06:30:42] [MEM  ] Usage: 52736 KB
+[06:30:43] [TIME ] Elapsed: 6s / 10s
+[06:30:43] [CPU  ] Usage: 0.0%
+[06:30:43] [MEM  ] Usage: 52736 KB
+[06:30:43] [TIME ] Elapsed: 6s / 10s
+[06:30:43] [CPU  ] Usage: 4.0%
+[06:30:43] [MEM  ] Usage: 62976 KB
+[06:30:44] [TIME ] Elapsed: 7s / 10s
+[06:30:44] [CPU  ] Usage: 0.0%
+[06:30:44] [MEM  ] Usage: 62976 KB
+[06:30:44] [TIME ] Elapsed: 7s / 10s
+[06:30:44] [CPU  ] Usage: 2.0%
+[06:30:44] [MEM  ] Usage: 73344 KB
+[06:30:45] [TIME ] Elapsed: 8s / 10s
+[06:30:45] [CPU  ] Usage: 0.0%
+[06:30:45] [MEM  ] Usage: 73344 KB
+[06:30:45] [TIME ] Elapsed: 8s / 10s
+[06:30:45] [CPU  ] Usage: 2.0%
+[06:30:45] [MEM  ] Usage: 83584 KB
+[06:30:46] [TIME ] Elapsed: 9s / 10s
+[06:30:46] [CPU  ] Usage: 0.0%
+[06:30:46] [MEM  ] Usage: 83584 KB
+[06:30:46] [TIME ] Elapsed: 9s / 10s
+[06:30:46] [CPU  ] Usage: 4.0%
+[06:30:46] [MEM  ] Usage: 93824 KB
+[06:30:47] [TIME ] Elapsed: 10s / 10s
+[06:30:47] [TIME ] Limit exceeded!
+[06:30:47] [CPU  ] Usage: 0.0%
+[06:30:47] [SANDBOX] TERMINATING PID=947 — TIME LIMIT EXCEEDED
+[06:30:47] [MEM  ] Thread exiting.
+[06:30:47] [CPU  ] Thread exiting.
+[06:30:47] [TIME ] Thread exiting.
+[06:30:47] [SBOX ] ============================================
+[06:30:47] [SBOX ] SANDBOX FINAL REPORT
+[06:30:47] [SBOX ] Binary          : ./test_binaries/test_mem
+[06:30:47] [SBOX ] Child PID       : 947
+[06:30:47] [SBOX ] Total runtime   : 10s
+[06:30:47] [SBOX ] Peak CPU usage  : 0.0%
+[06:30:47] [SBOX ] Peak memory     : 93824 KB
+[06:30:47] [SBOX ] Killed by signal: 9 (Killed)
+[06:30:47] [SBOX ] Termination     : TIME LIMIT EXCEEDED
+[06:30:47] [SBOX ] ============================================
+[06:30:54] [SBOX ] ============================================
+[06:30:54] [SBOX ] User Space Malware Analysis Sandbox
+[06:30:54] [SBOX ] Binary   : ./test_binaries/test_mem
+[06:30:54] [SBOX ] Time lim : 10s
+[06:30:54] [SBOX ] CPU lim  : 80%
+[06:30:54] [SBOX ] Mem lim  : 102400 KB
+[06:30:54] [SBOX ] Sandbox  : PID=965
+[06:30:54] [SBOX ] Child spawned: PID=967
+[06:30:54] [SBOX ] Launching 3 monitoring threads...
+[06:30:54] [TIME ] Monitor started. Limit: 10 seconds
+[06:30:54] [CPU  ] Monitor started. Limit: 80%
+[06:30:54] [MEM  ] Monitor started. Limit: 102400 KB
+[06:30:55] [TIME ] Elapsed: 1s / 10s
+[06:30:55] [CPU  ] Usage: 0.0%
+[06:30:55] [MEM  ] Usage: 11776 KB
+[06:30:55] [TIME ] Elapsed: 1s / 10s
+[06:30:55] [CPU  ] Usage: 0.0%
+[06:30:55] [MEM  ] Usage: 11776 KB
+[06:30:56] [TIME ] Elapsed: 2s / 10s
+[06:30:56] [CPU  ] Usage: 2.0%
+[06:30:56] [MEM  ] Usage: 22016 KB
+[06:30:56] [TIME ] Elapsed: 2s / 10s
+[06:30:56] [CPU  ] Usage: 0.0%
+[06:30:56] [MEM  ] Usage: 22016 KB
+[06:30:57] [CPU  ] Usage: 2.0%
+[06:30:57] [TIME ] Elapsed: 3s / 10s
+[06:30:57] [MEM  ] Usage: 32256 KB
+[06:30:57] [TIME ] Elapsed: 3s / 10s
+[06:30:57] [CPU  ] Usage: 0.0%
+[06:30:57] [MEM  ] Usage: 32256 KB
+[06:30:58] [TIME ] Elapsed: 4s / 10s
+[06:30:58] [CPU  ] Usage: 2.0%
+[06:30:58] [MEM  ] Usage: 42496 KB
+[06:30:58] [TIME ] Elapsed: 4s / 10s
+[06:30:58] [CPU  ] Usage: 0.0%
+[06:30:58] [MEM  ] Usage: 42496 KB
+[06:30:59] [TIME ] Elapsed: 5s / 10s
+[06:30:59] [CPU  ] Usage: 2.0%
+[06:30:59] [MEM  ] Usage: 52736 KB
+[06:30:59] [TIME ] Elapsed: 5s / 10s
+[06:30:59] [CPU  ] Usage: 0.0%
+[06:30:59] [MEM  ] Usage: 52736 KB
+[06:31:00] [TIME ] Elapsed: 6s / 10s
+[06:31:00] [CPU  ] Usage: 0.0%
+[06:31:00] [MEM  ] Usage: 62976 KB
+[06:31:00] [TIME ] Elapsed: 6s / 10s
+[06:31:00] [CPU  ] Usage: 0.0%
+[06:31:00] [MEM  ] Usage: 62976 KB
+[06:31:01] [TIME ] Elapsed: 7s / 10s
+[06:31:01] [CPU  ] Usage: 4.0%
+[06:31:01] [MEM  ] Usage: 73344 KB
+[06:31:01] [TIME ] Elapsed: 7s / 10s
+[06:31:01] [CPU  ] Usage: 0.0%
+[06:31:01] [MEM  ] Usage: 73344 KB
+[06:31:02] [TIME ] Elapsed: 8s / 10s
+[06:31:02] [CPU  ] Usage: 4.0%
+[06:31:02] [MEM  ] Usage: 83584 KB
+[06:31:02] [TIME ] Elapsed: 8s / 10s
+[06:31:02] [CPU  ] Usage: 0.0%
+[06:31:02] [MEM  ] Usage: 83584 KB
+[06:31:03] [TIME ] Elapsed: 9s / 10s
+[06:31:03] [CPU  ] Usage: 2.0%
+[06:31:03] [MEM  ] Usage: 93824 KB
+[06:31:03] [TIME ] Elapsed: 9s / 10s
+[06:31:03] [CPU  ] Usage: 0.0%
+[06:31:03] [MEM  ] Usage: 93824 KB
+[06:31:04] [TIME ] Elapsed: 10s / 10s
+[06:31:04] [TIME ] Limit exceeded!
+[06:31:04] [SANDBOX] TERMINATING PID=967 — TIME LIMIT EXCEEDED
+[06:31:04] [TIME ] Thread exiting.
+[06:31:04] [CPU  ] Thread exiting.
+[06:31:04] [MEM  ] Thread exiting.
+[06:31:04] [SBOX ] ============================================
+[06:31:04] [SBOX ] SANDBOX FINAL REPORT
+[06:31:04] [SBOX ] Binary          : ./test_binaries/test_mem
+[06:31:04] [SBOX ] Child PID       : 967
+[06:31:04] [SBOX ] Total runtime   : 10s
+[06:31:04] [SBOX ] Peak CPU usage  : 0.0%
+[06:31:04] [SBOX ] Peak memory     : 93824 KB
+[06:31:04] [SBOX ] Killed by signal: 9 (Killed)
+[06:31:04] [SBOX ] Termination     : TIME LIMIT EXCEEDED
+[06:31:04] [SBOX ] ============================================
+[06:31:54] [SBOX ] ============================================
+[06:31:54] [SBOX ] User Space Malware Analysis Sandbox
+[06:31:54] [SBOX ] Binary   : ./test_binaries/test_timeout
+[06:31:54] [SBOX ] Time lim : 10s
+[06:31:54] [SBOX ] CPU lim  : 80%
+[06:31:54] [SBOX ] Mem lim  : 102400 KB
+[06:31:54] [SBOX ] Sandbox  : PID=999
+[06:31:54] [SBOX ] Child spawned: PID=1001
+[06:31:54] [SBOX ] Launching 3 monitoring threads...
+[06:31:54] [TIME ] Monitor started. Limit: 10 seconds
+[06:31:54] [CPU  ] Monitor started. Limit: 80%
+[06:31:54] [MEM  ] Monitor started. Limit: 102400 KB
+[06:31:55] [TIME ] Elapsed: 1s / 10s
+[06:31:55] [MEM  ] Usage: 1280 KB
+[06:31:55] [CPU  ] Usage: 0.0%
+[06:31:55] [TIME ] Elapsed: 1s / 10s
+[06:31:55] [MEM  ] Usage: 1280 KB
+[06:31:55] [CPU  ] Usage: 0.0%
+[06:31:56] [MEM  ] Usage: 1536 KB
+[06:31:56] [TIME ] Elapsed: 2s / 10s
+[06:31:56] [CPU  ] Usage: 0.0%
+[06:31:56] [MEM  ] Usage: 1536 KB
+[06:31:56] [TIME ] Elapsed: 2s / 10s
+[06:31:56] [CPU  ] Usage: 0.0%
+[06:31:57] [MEM  ] Usage: 1536 KB
+[06:31:57] [TIME ] Elapsed: 3s / 10s
+[06:31:57] [CPU  ] Usage: 0.0%
+[06:31:57] [MEM  ] Usage: 1536 KB
+[06:31:57] [TIME ] Elapsed: 3s / 10s
+[06:31:57] [CPU  ] Usage: 0.0%
+[06:31:58] [MEM  ] Usage: 1536 KB
+[06:31:58] [TIME ] Elapsed: 4s / 10s
+[06:31:58] [CPU  ] Usage: 0.0%
+[06:31:58] [MEM  ] Usage: 1536 KB
+[06:31:58] [TIME ] Elapsed: 4s / 10s
+[06:31:58] [CPU  ] Usage: 0.0%
+[06:31:59] [MEM  ] Usage: 1536 KB
+[06:31:59] [TIME ] Elapsed: 5s / 10s
+[06:31:59] [CPU  ] Usage: 0.0%
+[06:31:59] [MEM  ] Usage: 1536 KB
+[06:31:59] [TIME ] Elapsed: 5s / 10s
+[06:31:59] [CPU  ] Usage: 0.0%
+[06:32:00] [MEM  ] Usage: 1536 KB
+[06:32:00] [TIME ] Elapsed: 6s / 10s
+[06:32:00] [CPU  ] Usage: 0.0%
+[06:32:00] [MEM  ] Usage: 1536 KB
+[06:32:00] [TIME ] Elapsed: 6s / 10s
+[06:32:00] [CPU  ] Usage: 0.0%
+[06:32:01] [MEM  ] Usage: 1536 KB
+[06:32:01] [TIME ] Elapsed: 7s / 10s
+[06:32:01] [CPU  ] Usage: 0.0%
+[06:32:01] [MEM  ] Usage: 1536 KB
+[06:32:01] [TIME ] Elapsed: 7s / 10s
+[06:32:01] [CPU  ] Usage: 0.0%
+[06:32:02] [MEM  ] Usage: 1536 KB
+[06:32:02] [TIME ] Elapsed: 8s / 10s
+[06:32:02] [CPU  ] Usage: 0.0%
+[06:32:02] [MEM  ] Usage: 1536 KB
+[06:32:02] [TIME ] Elapsed: 8s / 10s
+[06:32:02] [CPU  ] Usage: 0.0%
+[06:32:03] [MEM  ] Usage: 1536 KB
+[06:32:03] [TIME ] Elapsed: 9s / 10s
+[06:32:03] [CPU  ] Usage: 0.0%
+[06:32:03] [MEM  ] Usage: 1536 KB
+[06:32:03] [TIME ] Elapsed: 9s / 10s
+[06:32:03] [CPU  ] Usage: 0.0%
+[06:32:04] [MEM  ] Usage: 1536 KB
+[06:32:04] [TIME ] Elapsed: 10s / 10s
+[06:32:04] [TIME ] Limit exceeded!
+[06:32:04] [SANDBOX] TERMINATING PID=1001 — TIME LIMIT EXCEEDED
+[06:32:04] [TIME ] Thread exiting.
+[06:32:04] [CPU  ] Thread exiting.
+[06:32:04] [MEM  ] Thread exiting.
+[06:32:04] [SBOX ] ============================================
+[06:32:04] [SBOX ] SANDBOX FINAL REPORT
+[06:32:04] [SBOX ] Binary          : ./test_binaries/test_timeout
+[06:32:04] [SBOX ] Child PID       : 1001
+[06:32:04] [SBOX ] Total runtime   : 10s
+[06:32:04] [SBOX ] Peak CPU usage  : 0.0%
+[06:32:04] [SBOX ] Peak memory     : 1536 KB
+[06:32:04] [SBOX ] Killed by signal: 9 (Killed)
+[06:32:04] [SBOX ] Termination     : TIME LIMIT EXCEEDED
+[06:32:04] [SBOX ] ============================================
+[11:19:47] [SBOX ] ============================================
+[11:19:47] [SBOX ] User Space Malware Analysis Sandbox
+[11:19:47] [SBOX ] Binary   : ./test_binaries/test_cpu
+[11:19:47] [SBOX ] Time lim : 10s
+[11:19:47] [SBOX ] CPU lim  : 80%
+[11:19:47] [SBOX ] Mem lim  : 102400 KB
+[11:19:47] [SBOX ] Sandbox  : PID=10762
+[11:19:47] [SBOX ] Child spawned: PID=10764
+[11:19:47] [SBOX ] Launching 3 monitoring threads...
+[11:19:47] [TIME ] Monitor started. Limit: 10 seconds
+[11:19:47] [CPU  ] Monitor started. Limit: 80%
+[11:19:47] [MEM  ] Monitor started. Limit: 102400 KB
+[11:19:48] [TIME ] Elapsed: 1s / 10s
+[11:19:48] [CPU  ] Usage: 98.0%
+[11:19:48] [MEM  ] Usage: 1152 KB
+[11:19:48] [CPU  ] Limit exceeded: 98.0% > 80%
+[11:19:48] [SANDBOX] TERMINATING PID=10764 — CPU LIMIT EXCEEDED
+[11:19:48] [CPU  ] Thread exiting.
+[11:19:48] [TIME ] Thread exiting.
+[11:19:48] [MEM  ] Thread exiting.
+[11:19:48] [SBOX ] ============================================
+[11:19:48] [SBOX ] SANDBOX FINAL REPORT
+[11:19:48] [SBOX ] Binary          : ./test_binaries/test_cpu
+[11:19:48] [SBOX ] Child PID       : 10764
+[11:19:48] [SBOX ] Total runtime   : 1s
+[11:19:48] [SBOX ] Peak CPU usage  : 98.0%
+[11:19:48] [SBOX ] Peak memory     : 1152 KB
+[11:19:48] [SBOX ] Killed by signal: 9 (Killed)
+[11:19:48] [SBOX ] Termination     : CPU LIMIT EXCEEDED
+[11:19:48] [SBOX ] ============================================

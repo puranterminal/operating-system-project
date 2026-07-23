@@ -1,0 +1,65 @@
+=== SANDBOX START: ./test_binaries/test_stubborn ===
+Child PID: 12960
+Starting 3 monitor threads...
+[CPU ] 0%
+[MEM ] 1280 KB
+[TIME] 1/10 sec
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[TIME] 2/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 3/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[CPU ] 0%
+[MEM ] 1280 KB
+[TIME] 4/10 sec
+[CPU ] 0%
+[MEM ] 1280 KB
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 5/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 6/10 sec
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[TIME] 7/10 sec
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[TIME] 8/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 9/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 10/10 sec
+>> VIOLATION: TIME LIMIT -> sending SIGTERM
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[CPU ] 0%
+[MEM ] 1280 KB
+>> SIGTERM ignored -> sending SIGKILL
+=== FINAL REPORT ===
+Reason: TIME LIMIT
+Killed by signal: 9
+====================

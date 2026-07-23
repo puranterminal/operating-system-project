@@ -1,0 +1,16 @@
+[06:30:54] [SBOX ] ============================================
+[06:30:54] [SBOX ] User Space Malware Analysis Sandbox
+[06:30:54] [SBOX ] Binary   : ./test_binaries/test_mem
+[06:30:54] [SBOX ] Time lim : 10s
+[06:30:54] [SBOX ] Mem lim  : 102400 KB
+[06:30:54] [SBOX ] Sandbox  : PID=965
+[06:30:54] [SBOX ] Child spawned: PID=967
+[06:30:54] [SBOX ] Launching 3 monitoring threads...
+[06:31:04] [SBOX ] ============================================
+[06:31:04] [SBOX ] SANDBOX FINAL REPORT
+[06:31:04] [SBOX ] Binary          : ./test_binaries/test_mem
+[06:31:04] [SBOX ] Child PID       : 967
+[06:31:04] [SBOX ] Total runtime   : 10s
+[06:31:04] [SBOX ] Peak memory     : 93824 KB
+[06:31:04] [SBOX ] Killed by signal: 9 (Killed)
+[06:31:04] [SBOX ] ============================================

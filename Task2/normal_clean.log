@@ -1,0 +1,24 @@
+[11:42:44] [SBOX ] ============================================
+[11:42:44] [SBOX ] User Space Malware Analysis Sandbox
+[11:42:44] [SBOX ] Binary   : ./test_binaries/test_normal
+[11:42:44] [SBOX ] Time lim : 10s
+[11:42:44] [SBOX ] Mem lim  : 102400 KB
+[11:42:44] [SBOX ] Sandbox  : PID=2717
+[11:42:44] [SBOX ] Child spawned: PID=2719
+[11:42:44] [SBOX ] Launching 3 monitoring threads...
+[TEST_NORMAL] Started — simulating normal work...
+[TEST_NORMAL] Working... step 1/5
+[TEST_NORMAL] Working... step 2/5
+[TEST_NORMAL] Working... step 3/5
+[TEST_NORMAL] Working... step 4/5
+[TEST_NORMAL] Working... step 5/5
+[TEST_NORMAL] Finished successfully.
+[11:42:49] [SBOX ] ============================================
+[11:42:49] [SBOX ] SANDBOX FINAL REPORT
+[11:42:49] [SBOX ] Binary          : ./test_binaries/test_normal
+[11:42:49] [SBOX ] Child PID       : 2719
+[11:42:49] [SBOX ] Total runtime   : 5s
+[11:42:49] [SBOX ] Peak memory     : 1536 KB
+[11:42:49] [SBOX ] Exit status     : 0
+[11:42:49] [SBOX ] Termination     : NORMAL COMPLETION
+[11:42:49] [SBOX ] ============================================

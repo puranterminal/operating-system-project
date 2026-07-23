@@ -1,0 +1,31 @@
+[11:19:47] [SBOX ] ============================================
+[11:19:47] [SBOX ] User Space Malware Analysis Sandbox
+[11:19:47] [SBOX ] Binary   : ./test_binaries/test_cpu
+[11:19:47] [SBOX ] Time lim : 10s
+[11:19:47] [SBOX ] CPU lim  : 80%
+[11:19:47] [SBOX ] Mem lim  : 102400 KB
+[11:19:47] [SBOX ] Sandbox  : PID=10762
+[11:19:47] [SBOX ] Child spawned: PID=10764
+[11:19:47] [SBOX ] Launching 3 monitoring threads...
+[11:19:47] [TIME ] Monitor started. Limit: 10 seconds
+[11:19:47] [CPU  ] Monitor started. Limit: 80%
+[11:19:47] [MEM  ] Monitor started. Limit: 102400 KB
+[TEST_CPU] Started — burning CPU indefinitely...
+[11:19:48] [TIME ] Elapsed: 1s / 10s
+[11:19:48] [CPU  ] Usage: 98.0%
+[11:19:48] [MEM  ] Usage: 1152 KB
+[11:19:48] [CPU  ] Limit exceeded: 98.0% > 80%
+[11:19:48] [SANDBOX] TERMINATING PID=10764 — CPU LIMIT EXCEEDED
+[11:19:48] [CPU  ] Thread exiting.
+[11:19:48] [TIME ] Thread exiting.
+[11:19:48] [MEM  ] Thread exiting.
+[11:19:48] [SBOX ] ============================================
+[11:19:48] [SBOX ] SANDBOX FINAL REPORT
+[11:19:48] [SBOX ] Binary          : ./test_binaries/test_cpu
+[11:19:48] [SBOX ] Child PID       : 10764
+[11:19:48] [SBOX ] Total runtime   : 1s
+[11:19:48] [SBOX ] Peak CPU usage  : 98.0%
+[11:19:48] [SBOX ] Peak memory     : 1152 KB
+[11:19:48] [SBOX ] Killed by signal: 9 (Killed)
+[11:19:48] [SBOX ] Termination     : CPU LIMIT EXCEEDED
+[11:19:48] [SBOX ] ============================================

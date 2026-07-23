@@ -1,0 +1,25 @@
+[NORMAL] Working...
+[NORMAL] Done.
+=== SANDBOX START: ./test_binaries/test_normal ===
+Child PID: 12839
+Starting 3 monitor threads...
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 1/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 2/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 3/10 sec
+[MEM ] 1280 KB
+[CPU ] 0%
+[TIME] 4/10 sec
+=== FINAL REPORT ===
+Reason: NORMAL
+Exit status: 0
+====================

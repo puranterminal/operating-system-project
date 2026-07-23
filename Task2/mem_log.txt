@@ -1,0 +1,19 @@
+=== SANDBOX START: ./test_binaries/test_mem ===
+Child PID: 12903
+Starting 3 monitor threads...
+[MEM ] 32000 KB
+[CPU ] 14%
+[TIME] 1/10 sec
+[CPU ] 4%
+[MEM ] 52480 KB
+[CPU ] 6%
+[MEM ] 72960 KB
+[TIME] 2/10 sec
+[CPU ] 6%
+[MEM ] 103680 KB
+>> VIOLATION: MEMORY LIMIT -> sending SIGTERM
+[TIME] 3/10 sec
+=== FINAL REPORT ===
+Reason: MEMORY LIMIT
+Killed by signal: 15
+====================

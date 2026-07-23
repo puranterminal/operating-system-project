@@ -1,0 +1,10 @@
+=== SANDBOX START: ./test_binaries/test_cpu ===
+Child PID: 12885
+Starting 3 monitor threads...
+[CPU ] 96%
+>> VIOLATION: CPU LIMIT -> sending SIGTERM
+[TIME] 1/10 sec
+=== FINAL REPORT ===
+Reason: CPU LIMIT
+Killed by signal: 15
+====================
